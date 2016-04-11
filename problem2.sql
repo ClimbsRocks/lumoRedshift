@@ -21,6 +21,7 @@ good_posture_time AS (
   GROUP BY owner, local_date
 )
 
+-- obviously, Redshift doesn't support corr. The next iteration of developing this query would be to go through and calculate the correlation manually. Obviously it would be quicker to copy/paste the data into a quick postgres table and calculate the correlation from there as a one-off, but I prefer writing reproducible/maintainable code over one-offs. 
 SELECT corr(coach_buzzes.buzzes, good_posture_time.good_posture_time), good_posture_time.owner, good_posture_time.local_date
 FROM good_posture_time
 INNER JOIN coach_buzzes ON good_posture_time.owner = coach_buzzes.owner AND good_posture_time.local_date = coach_buzzes.local_date
